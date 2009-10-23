@@ -43,7 +43,7 @@ def create(request, form_class=TribeForm, template_name="tribes/create.html"):
         tribe.save()
         if notification:
             # @@@ might be worth having a shortcut for sending to all users
-            notification.send(User.objects.all(), "tribes_new_tribe",
+            notification.send(User.objects.filter(is_active=True), "tribes_new_tribe",
                 {"tribe": tribe}, queue=True)
         return HttpResponseRedirect(tribe.get_absolute_url())
     

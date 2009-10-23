@@ -154,7 +154,7 @@ def add_task(request, group_slug=None, secret_id=None, form_class=TaskForm, temp
                     if group:
                         notify_list = group.member_queryset()
                     else:
-                        notify_list = User.objects.all() # @@@
+                        notify_list = User.objects.filter(is_active=True) # @@@
                     notify_list = notify_list.exclude(id__exact=request.user.id)
                     notification.send(notify_list, "tasks_new", {"creator": request.user, "task": task, "group": group})
                 if request.POST.has_key('add-another-task'):
@@ -246,7 +246,7 @@ def task(request, id, group_slug=None, template_name="tasks/task.html", bridge=N
     if group:
         notify_list = group.member_queryset()
     else:
-        notify_list = User.objects.all()
+        notify_list = User.objects.filter(is_active=True)
     notify_list = notify_list.exclude(id__exact=request.user.id)
     
     if not request.user.is_authenticated():

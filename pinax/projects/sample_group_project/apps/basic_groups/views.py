@@ -29,7 +29,7 @@ def create(request, form_class=BasicGroupForm, template_name="basic_groups/creat
         group.save()
         if notification:
             # @@@ might be worth having a shortcut for sending to all users
-            notification.send(User.objects.all(), "groups_new_group", {"group": group}, queue=True)
+            notification.send(User.objects.filter(is_active=True), "groups_new_group", {"group": group}, queue=True)
         return HttpResponseRedirect(group.get_absolute_url())
     
     return render_to_response(template_name, {

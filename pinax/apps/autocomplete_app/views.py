@@ -9,7 +9,7 @@ def username_autocomplete_all(request):
         from basic_profiles.models import Profile
         from avatar.templatetags.avatar_tags import avatar
         q = request.GET.get("q")
-        users = User.objects.all()
+        users = User.objects.filter(is_active=True)
         content = []
         # @@@ temporary hack -- don't try this at home (or on real sites)
         for user in users:

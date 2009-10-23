@@ -44,7 +44,7 @@ def create(request, form_class=ProjectForm, template_name="projects/create.html"
         project_member.save()
         if notification:
             # @@@ might be worth having a shortcut for sending to all users
-            notification.send(User.objects.all(), "projects_new_project",
+            notification.send(User.objects.filter(is_active=True), "projects_new_project",
                 {"project": project}, queue=True)
         return HttpResponseRedirect(project.get_absolute_url())
     

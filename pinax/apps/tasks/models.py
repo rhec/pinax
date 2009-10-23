@@ -168,7 +168,7 @@ def new_comment(sender, instance, **kwargs):
             if group:
                 notify_list = group.member_queryset().exclude(id__exact=instance.user.id) # @@@
             else:
-                notify_list = User.objects.all().exclude(id__exact=instance.user.id)
+                notify_list = User.objects.filter(is_active=True).exclude(id__exact=instance.user.id)
             
             notification.send(notify_list, "tasks_comment", {
                 "user": instance.user, "task": task, "comment": instance, "group": group,

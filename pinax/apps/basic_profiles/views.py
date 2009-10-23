@@ -21,7 +21,7 @@ else:
 
 
 def profiles(request, template_name="basic_profiles/profiles.html"):
-    users = User.objects.all().order_by("-date_joined")
+    users = User.objects.filter(is_active=True).order_by("-date_joined")
     search_terms = request.GET.get('search', '')
     order = request.GET.get('order')
     if not order:
